@@ -1,60 +1,129 @@
+# ==================================================
+# Name: hamdi ali
+# Program: Study Log
+# Description:
+# This program allows the user to add, list,
+# save, and load study notes using a text file.
+# ==================================================
+
+
+# ==================================================
+# SECTION 1
+# Comments, variables, print, and input
+# ==================================================
+
+
+# ==================================================
+# SECTION 4 & 5
+# Functions + File Handling + Error Handling
+# ==================================================
+
 def load_notes(path):
-    """Waxay ka soo raddaysaa qoraallada faylka notes.txt"""
+    """
+    Load notes from a text file.
+    If the file does not exist, return an empty list.
+    """
+
     notes = []
+
     try:
         with open(path, "r", encoding="utf-8") as file:
+
+            # SECTION 3
+            # List + for loop
             for line in file:
                 notes.append(line.strip())
+
     except FileNotFoundError:
         return []
+
     return notes
 
 
 def save_notes(path, notes):
-    """Waxay ku kaydinaysaa dhammaan qoraallada faylka notes.txt"""
-    with open(path, "w", encoding="utf-8") as file:
-        for note in notes:
-            file.write(f"{note}\n")
+    """
+    Save notes into a text file.
+    Each note is written on its own line.
+    """
 
+    with open(path, "w", encoding="utf-8") as file:
+
+        # SECTION 3
+        # for loop to write all notes
+        for note in notes:
+            file.write(note + "\n")
+
+
+# ==================================================
+# SECTION 4
+# main() function
+# ==================================================
 
 def main():
-    file_name = "notes.txt"
 
-    notes = load_notes(file_name)
+    # SECTION 1
+    # Variable + input + print
+    name = input("Enter your name: ")
+    print(f"Welcome, {name}!")
 
-    user_name = input("Fadlan qor magacaaga: ")
-    print(
-        f"\nKu soo dhowaad {user_name}, kani waa Buug-yarahaaga Waxbarashada!")
+    # Load notes from file
+    notes = load_notes("notes.txt")
 
+    # Keep program running until user quits
     while True:
-        print("\n--- MENU ---")
-        print("1) Add a note (Ku dar qoraal)")
-        print("2) List all notes (Tus dhammaan)")
-        print("3) Save and Quit (Kaydi oo ka bax)")
 
-        choice = input("Dooro (1, 2, ama 3): ")
+        # SECTION 2
+        # Simple text menu using print
+        print("\n===== STUDY LOG MENU =====")
+        print("1) Add note")
+        print("2) List notes")
+        print("3) Quit")
 
+        choice = input("Pick: ")
+
+        # SECTION 2
+        # if / elif / else menu
         if choice == "1":
-            new_note = input("Qor waxaad baratay: ")
-            notes.append(new_note)
-            print("Waa la xaqiijiyay!")
+
+            # SECTION 1
+            # input + variable
+            note = input("Note: ")
+
+            # SECTION 3
+            # Add note to list
+            notes.append(note)
+
+            print("Note added.")
 
         elif choice == "2":
-            print("\nQoraalladaada:")
-            if not notes:
-                print("- Buuggaagu hadda waa maran yahay.")
+
+            # SECTION 3
+            # Print all notes using a for loop
+            if len(notes) == 0:
+                print("No notes found.")
+
             else:
-                for n in notes:
-                    print(f"- {n}")
+                print("\nYour Notes:")
+
+                for note in notes:
+                    print(note)
 
         elif choice == "3":
-            save_notes(file_name, notes)
-            print(f"Macasalaama {user_name}! Xogtaada waa la kaydiyay.")
+
+            # Save notes before quitting
+            save_notes("notes.txt", notes)
+
+            print("Bye!")
             break
 
         else:
-            print("Error: Fadlan dooro mid ka mid ah lambarada kor ku qoran.")
+            print("Invalid choice. Try again.")
 
+
+# ==================================================
+# SECTION 4
+# Run the program
+# ==================================================
 
 if __name__ == "__main__":
     main()
